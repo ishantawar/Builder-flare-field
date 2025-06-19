@@ -4,12 +4,15 @@ import { Navigation } from "@/components/layout/navigation";
 import { Loader } from "@/components/layout/loader";
 import { Hero } from "@/components/sections/hero";
 import { Features } from "@/components/sections/features";
+import { DashboardShowcase } from "@/components/sections/dashboard-showcase";
 import { Testimonials } from "@/components/sections/testimonials";
 import { Pricing } from "@/components/sections/pricing";
 import { FAQ } from "@/components/sections/faq";
 import { Contact } from "@/components/sections/contact";
 import { Footer } from "@/components/layout/footer";
 import { ScrollToTop } from "@/components/layout/scroll-to-top";
+import { MouseTrail } from "@/components/ui/mouse-trail";
+import { InteractiveCursor } from "@/components/ui/interactive-cursor";
 import { Toaster } from "@/components/ui/toaster";
 
 export default function Index() {
@@ -35,6 +38,7 @@ export default function Index() {
           <Navigation />
           <main className="relative">
             <Hero />
+            <DashboardShowcase />
             <Features />
             <Testimonials />
             <Pricing />
@@ -43,6 +47,8 @@ export default function Index() {
           </main>
           <Footer />
           <ScrollToTop />
+          <MouseTrail />
+          <InteractiveCursor />
           <Toaster />
         </>
       )}
