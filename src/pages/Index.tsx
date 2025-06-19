@@ -13,6 +13,7 @@ import { Footer } from "@/components/layout/footer";
 import { ScrollToTop } from "@/components/layout/scroll-to-top";
 import { MouseTrail } from "@/components/ui/mouse-trail";
 import { InteractiveCursor } from "@/components/ui/interactive-cursor";
+import { AnimatedBackground } from "@/components/ui/animated-background";
 import { Toaster } from "@/components/ui/toaster";
 
 export default function Index() {
@@ -35,6 +36,7 @@ export default function Index() {
 
       {!isLoading && (
         <>
+          <AnimatedBackground />
           <Navigation />
           <main className="relative">
             <Hero />
