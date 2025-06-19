@@ -17,8 +17,19 @@ export default defineConfig(({ mode }) => ({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: undefined,
+        manualChunks: {
+          vendor: ["react", "react-dom"],
+          animations: ["framer-motion"],
+          ui: [
+            "@radix-ui/react-accordion",
+            "@radix-ui/react-dialog",
+            "@radix-ui/react-popover",
+          ],
+          forms: ["react-hook-form", "@hookform/resolvers", "zod"],
+          utils: ["clsx", "tailwind-merge", "lucide-react"],
+        },
       },
     },
+    chunkSizeWarningLimit: 1000,
   },
 }));
