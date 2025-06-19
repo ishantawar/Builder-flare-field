@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
+import { RippleEffect } from "@/components/ui/ripple-effect";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
@@ -464,24 +465,26 @@ export function Contact() {
                       />
 
                       {/* Submit Button */}
-                      <Button
-                        type="submit"
-                        size="lg"
-                        disabled={isSubmitting}
-                        className="w-full btn-glow bg-nexaflow-gradient hover:bg-nexaflow-gradient-dark text-white border-0 text-base py-6"
-                      >
-                        {isSubmitting ? (
-                          <div className="flex items-center space-x-2">
-                            <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                            <span>Sending Message...</span>
-                          </div>
-                        ) : (
-                          <div className="flex items-center space-x-2">
-                            <Send className="w-5 h-5" />
-                            <span>Send Message</span>
-                          </div>
-                        )}
-                      </Button>
+                      <RippleEffect color="rgba(255, 255, 255, 0.3)">
+                        <Button
+                          type="submit"
+                          size="lg"
+                          disabled={isSubmitting}
+                          className="w-full btn-glow bg-nexaflow-gradient hover:bg-nexaflow-gradient-dark text-white border-0 text-base py-6 relative overflow-hidden"
+                        >
+                          {isSubmitting ? (
+                            <div className="flex items-center space-x-2">
+                              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                              <span>Sending Message...</span>
+                            </div>
+                          ) : (
+                            <div className="flex items-center space-x-2">
+                              <Send className="w-5 h-5" />
+                              <span>Send Message</span>
+                            </div>
+                          )}
+                        </Button>
+                      </RippleEffect>
 
                       <p className="text-xs text-muted-foreground text-center">
                         By submitting this form, you agree to our{" "}

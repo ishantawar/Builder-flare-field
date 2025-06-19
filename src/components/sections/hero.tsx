@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { RippleEffect } from "@/components/ui/ripple-effect";
+import { FloatingParticles } from "@/components/ui/floating-particles";
+import { useParallax, useParallaxValue } from "@/hooks/use-parallax";
 import { ChevronDown, Play, Sparkles, ArrowRight } from "lucide-react";
 
 const typingTexts = [
@@ -15,6 +18,13 @@ export function Hero() {
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
+
+  // Parallax effects
+  const parallax1 = useParallax({ speed: 0.3, direction: "up" });
+  const parallax2 = useParallax({ speed: 0.5, direction: "down" });
+  const parallax3 = useParallax({ speed: 0.2, direction: "left" });
+  const parallax4 = useParallax({ speed: 0.4, direction: "right" });
+  const parallaxValue = useParallaxValue(0.1);
 
   useEffect(() => {
     const currentText = typingTexts[currentTextIndex];
@@ -59,11 +69,26 @@ export function Hero() {
         {/* Grid Pattern */}
         <div className="absolute inset-0 grid-pattern opacity-20" />
 
-        {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-20 h-20 bg-nexaflow-blue-400/20 rounded-full blur-xl float-1" />
-        <div className="absolute top-40 right-20 w-32 h-32 bg-nexaflow-purple-400/20 rounded-full blur-xl float-2" />
-        <div className="absolute bottom-20 left-20 w-24 h-24 bg-nexaflow-electric/20 rounded-full blur-xl float-3" />
-        <div className="absolute bottom-40 right-10 w-16 h-16 bg-nexaflow-purple-400/20 rounded-full blur-xl float-1" />
+        {/* Floating Particles */}
+        <FloatingParticles count={20} />
+
+        {/* Floating Elements with Parallax */}
+        <div
+          className="absolute top-20 left-10 w-20 h-20 bg-nexaflow-blue-400/20 rounded-full blur-xl float-1"
+          style={{ transform: parallax1 }}
+        />
+        <div
+          className="absolute top-40 right-20 w-32 h-32 bg-nexaflow-purple-400/20 rounded-full blur-xl float-2"
+          style={{ transform: parallax2 }}
+        />
+        <div
+          className="absolute bottom-20 left-20 w-24 h-24 bg-nexaflow-electric/20 rounded-full blur-xl float-3"
+          style={{ transform: parallax3 }}
+        />
+        <div
+          className="absolute bottom-40 right-10 w-16 h-16 bg-nexaflow-purple-400/20 rounded-full blur-xl float-1"
+          style={{ transform: parallax4 }}
+        />
       </div>
 
       {/* Video Background Placeholder */}
@@ -133,23 +158,27 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
           >
-            <Button
-              size="lg"
-              className="btn-glow bg-nexaflow-gradient hover:bg-nexaflow-gradient-dark text-white border-0 px-8 py-6 text-base group"
-              onClick={() => scrollToSection("contact")}
-            >
-              Get Started Free
-              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            <RippleEffect color="rgba(255, 255, 255, 0.3)">
+              <Button
+                size="lg"
+                className="btn-glow bg-nexaflow-gradient hover:bg-nexaflow-gradient-dark text-white border-0 px-8 py-6 text-base group relative overflow-hidden"
+                onClick={() => scrollToSection("contact")}
+              >
+                Get Started Free
+                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </RippleEffect>
 
-            <Button
-              size="lg"
-              variant="outline"
-              className="px-8 py-6 text-base group border-2 hover:bg-primary/5"
-            >
-              <Play className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
-              Watch Demo
-            </Button>
+            <RippleEffect color="rgba(14, 165, 233, 0.2)">
+              <Button
+                size="lg"
+                variant="outline"
+                className="px-8 py-6 text-base group border-2 hover:bg-primary/5 relative overflow-hidden"
+              >
+                <Play className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
+                Watch Demo
+              </Button>
+            </RippleEffect>
           </motion.div>
 
           {/* Stats */}
@@ -182,38 +211,73 @@ export function Hero() {
             </div>
           </motion.div>
 
-          {/* Hero Image Placeholder */}
+          {/* Hero Dashboard Images */}
           <motion.div
-            className="relative max-w-5xl mx-auto"
+            className="relative max-w-6xl mx-auto"
             initial={{ opacity: 0, y: 50, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 1, delay: 1.1 }}
+            style={{ transform: `translateY(${parallaxValue}px)` }}
           >
-            <div className="relative bg-gradient-to-br from-white to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-2xl overflow-hidden border border-gray-200 dark:border-gray-700">
-              {/* Header */}
-              <div className="flex items-center space-x-2 p-4 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-                <div className="w-3 h-3 bg-red-500 rounded-full" />
-                <div className="w-3 h-3 bg-yellow-500 rounded-full" />
-                <div className="w-3 h-3 bg-green-500 rounded-full" />
-              </div>
-
-              {/* Dashboard Mockup */}
-              <div className="p-6 aspect-video bg-gradient-to-br from-nexaflow-blue-50 to-nexaflow-purple-50 dark:from-nexaflow-blue-900/20 dark:to-nexaflow-purple-900/20 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-24 h-24 mx-auto mb-4 bg-nexaflow-gradient rounded-2xl flex items-center justify-center animate-float">
-                    <Sparkles className="w-12 h-12 text-white" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-muted-foreground mb-2">
-                    Dashboard Preview
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    Replace with your actual dashboard screenshot
-                  </p>
+            {/* Main Dashboard Container */}
+            <div className="relative">
+              {/* Primary Dashboard - Stats */}
+              <div className="relative bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden border border-gray-200 dark:border-gray-700">
+                <div className="flex items-center space-x-2 p-4 bg-gray-50/80 dark:bg-gray-800/80 border-b border-gray-200 dark:border-gray-700">
+                  <div className="w-3 h-3 bg-red-500 rounded-full" />
+                  <div className="w-3 h-3 bg-yellow-500 rounded-full" />
+                  <div className="w-3 h-3 bg-green-500 rounded-full" />
+                  <span className="ml-4 text-sm font-medium text-muted-foreground">
+                    NexaFlow Analytics
+                  </span>
                 </div>
+
+                <div className="p-2">
+                  <img
+                    src="https://cdn.builder.io/api/v1/assets/944fb376f8e6476abb4f459945671a42/stats-77f4c5?format=webp&width=800"
+                    alt="NexaFlow Analytics Dashboard"
+                    className="w-full h-auto rounded-xl"
+                    loading="lazy"
+                  />
+                </div>
+
+                {/* Glow Effect */}
+                <div className="absolute inset-0 bg-nexaflow-gradient opacity-5 animate-pulse rounded-3xl" />
               </div>
 
-              {/* Glow Effect */}
-              <div className="absolute inset-0 bg-nexaflow-gradient opacity-5 animate-pulse" />
+              {/* Floating Card - Graph */}
+              <motion.div
+                className="absolute -top-8 -right-8 lg:-right-12 w-80 bg-white/95 dark:bg-gray-800/95 backdrop-blur-lg rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-3"
+                initial={{ opacity: 0, x: 100, y: -20 }}
+                animate={{ opacity: 1, x: 0, y: 0 }}
+                transition={{ duration: 0.8, delay: 1.5 }}
+                style={{ transform: `${parallax2} scale(0.9)` }}
+              >
+                <img
+                  src="https://cdn.builder.io/api/v1/assets/944fb376f8e6476abb4f459945671a42/graph-a35753?format=webp&width=800"
+                  alt="Performance Analytics"
+                  className="w-full h-auto rounded-lg"
+                  loading="lazy"
+                />
+                <div className="absolute -bottom-2 -right-2 w-4 h-4 bg-green-500 rounded-full animate-pulse" />
+              </motion.div>
+
+              {/* Floating Card - Brand Kits */}
+              <motion.div
+                className="absolute -bottom-8 -left-8 lg:-left-12 w-72 bg-white/95 dark:bg-gray-800/95 backdrop-blur-lg rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-3"
+                initial={{ opacity: 0, x: -100, y: 20 }}
+                animate={{ opacity: 1, x: 0, y: 0 }}
+                transition={{ duration: 0.8, delay: 1.7 }}
+                style={{ transform: `${parallax3} scale(0.85)` }}
+              >
+                <img
+                  src="https://cdn.builder.io/api/v1/assets/944fb376f8e6476abb4f459945671a42/cards-569664?format=webp&width=800"
+                  alt="Brand Management"
+                  className="w-full h-auto rounded-lg"
+                  loading="lazy"
+                />
+                <div className="absolute -top-2 -right-2 w-4 h-4 bg-nexaflow-electric rounded-full animate-pulse" />
+              </motion.div>
             </div>
 
             {/* Floating Cards */}

@@ -4,7 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
+import { RippleEffect } from "@/components/ui/ripple-effect";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
+import { useParallax } from "@/hooks/use-parallax";
 import { Check, Zap, Crown, Building, ArrowRight } from "lucide-react";
 
 const pricingPlans = [
@@ -77,11 +79,16 @@ const pricingPlans = [
 export function Pricing() {
   const [isYearly, setIsYearly] = useState(false);
   const { ref: titleRef, isVisible: titleVisible } = useScrollReveal();
+  const parallax1 = useParallax({ speed: 0.15, direction: "up" });
 
   return (
     <section id="pricing" className="py-20 lg:py-32 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-nexaflow-purple-50/30 via-transparent to-nexaflow-blue-50/30 dark:from-nexaflow-purple-900/10 dark:via-transparent dark:to-nexaflow-blue-900/10" />
+      <div
+        className="absolute top-1/4 left-1/4 w-96 h-96 bg-nexaflow-purple-400/5 rounded-full blur-3xl"
+        style={{ transform: parallax1 }}
+      />
 
       <div className="container-fluid relative z-10">
         {/* Section Header */}
@@ -237,17 +244,25 @@ function PricingCard({
           </div>
 
           {/* CTA Button */}
-          <Button
-            className={`w-full ${
+          <RippleEffect
+            color={
               plan.popular
-                ? "bg-nexaflow-gradient hover:bg-nexaflow-gradient-dark text-white border-0"
-                : "variant-outline hover:bg-primary/5"
-            } btn-glow`}
-            size="lg"
+                ? "rgba(255, 255, 255, 0.3)"
+                : "rgba(14, 165, 233, 0.2)"
+            }
           >
-            {plan.cta}
-            <ArrowRight className="w-4 h-4 ml-2" />
-          </Button>
+            <Button
+              className={`w-full ${
+                plan.popular
+                  ? "bg-nexaflow-gradient hover:bg-nexaflow-gradient-dark text-white border-0"
+                  : "variant-outline hover:bg-primary/5"
+              } btn-glow relative overflow-hidden`}
+              size="lg"
+            >
+              {plan.cta}
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </Button>
+          </RippleEffect>
         </CardHeader>
 
         <CardContent className="pt-0">

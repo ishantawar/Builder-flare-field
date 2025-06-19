@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { RippleEffect } from "@/components/ui/ripple-effect";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
+import { useParallax } from "@/hooks/use-parallax";
 import {
   Zap,
   Brain,
@@ -91,13 +93,21 @@ const stats = [
 export function Features() {
   const { ref: titleRef, isVisible: titleVisible } = useScrollReveal();
   const { ref: statsRef, isVisible: statsVisible } = useScrollReveal();
+  const parallax1 = useParallax({ speed: 0.2, direction: "down" });
+  const parallax2 = useParallax({ speed: 0.3, direction: "up" });
 
   return (
     <section id="features" className="py-20 lg:py-32 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-nexaflow-blue-50/30 to-transparent dark:via-nexaflow-blue-900/10" />
-      <div className="absolute top-20 left-20 w-72 h-72 bg-nexaflow-purple-400/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 right-20 w-96 h-96 bg-nexaflow-blue-400/10 rounded-full blur-3xl" />
+      <div
+        className="absolute top-20 left-20 w-72 h-72 bg-nexaflow-purple-400/10 rounded-full blur-3xl"
+        style={{ transform: parallax1 }}
+      />
+      <div
+        className="absolute bottom-20 right-20 w-96 h-96 bg-nexaflow-blue-400/10 rounded-full blur-3xl"
+        style={{ transform: parallax2 }}
+      />
 
       <div className="container-fluid relative z-10">
         {/* Section Header */}
@@ -202,43 +212,45 @@ function FeatureCard({
       animate={isVisible ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.1 }}
     >
-      <Card className="group relative overflow-hidden border-2 border-transparent hover:border-primary/20 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm">
-        <CardContent className="p-6 lg:p-8">
-          {/* Icon */}
-          <div className="relative mb-6">
-            <div
-              className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${feature.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}
-            >
-              <feature.icon className="w-7 h-7 text-white" />
+      <RippleEffect color="rgba(14, 165, 233, 0.1)">
+        <Card className="group relative overflow-hidden border-2 border-transparent hover:border-primary/20 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm cursor-pointer">
+          <CardContent className="p-6 lg:p-8">
+            {/* Icon */}
+            <div className="relative mb-6">
+              <div
+                className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${feature.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}
+              >
+                <feature.icon className="w-7 h-7 text-white" />
+              </div>
+              <motion.div
+                className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${feature.color} opacity-30 blur-lg group-hover:blur-xl transition-all duration-300`}
+                initial={false}
+                whileHover={{ scale: 1.2 }}
+              />
             </div>
-            <motion.div
-              className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${feature.color} opacity-30 blur-lg group-hover:blur-xl transition-all duration-300`}
-              initial={false}
-              whileHover={{ scale: 1.2 }}
-            />
-          </div>
 
-          {/* Badge */}
-          <Badge
-            variant="secondary"
-            className="mb-4 text-xs font-medium bg-muted/50"
-          >
-            {feature.badge}
-          </Badge>
+            {/* Badge */}
+            <Badge
+              variant="secondary"
+              className="mb-4 text-xs font-medium bg-muted/50"
+            >
+              {feature.badge}
+            </Badge>
 
-          {/* Content */}
-          <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
-            {feature.title}
-          </h3>
+            {/* Content */}
+            <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
+              {feature.title}
+            </h3>
 
-          <p className="text-muted-foreground leading-relaxed">
-            {feature.description}
-          </p>
+            <p className="text-muted-foreground leading-relaxed">
+              {feature.description}
+            </p>
 
-          {/* Hover Effect */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-        </CardContent>
-      </Card>
+            {/* Hover Effect */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+          </CardContent>
+        </Card>
+      </RippleEffect>
     </motion.div>
   );
 }
